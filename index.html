@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery Image compare</title>
+    <link rel="stylesheet" href="assets/css/example.css"/>
+    <link rel="stylesheet" href="assets/css/images-compare.css"/>
+</head>
+<body>
+
+<div class="page-container">
+    <h1>ScummVM Shader Comparison</h1>
+    <div>
+        <div style="width: 50%; text-align: left;float:left">
+            <select id="sel1">
+                <option>Foo</option>
+            </select>
+        </div>
+        <div style="width: 50%; text-align: right; float:right">
+            <select id="sel2">
+                <option>Foo</option>
+            </select>
+        </div>
+    </div>
+    <div class="js-img-compare" style="margin-top: 10px;">
+        <div style="display: none;">
+            <img id="before" src="stock.png">
+        </div>
+        <div>
+            <img id="after" src="guest-dr-venom.png">
+        </div>
+    </div>
+    <div>
+        <button class="btn js-front-btn">Show left</button>
+        <button class="btn js-back-btn">Show right</button>
+        <button class="btn js-toggle-btn">Toggle</button>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery.images-compare.js"></script>
+<script type="text/javascript">
+    $(function () {
+        let files = [
+            "caligarl.png",
+            "caligarl2.png",
+            "cgwg-fast.png",
+            "cgwg-fast2.png",
+            "consumer.png",
+            "consumer2.png",
+            "crtsim.png",
+            "crtsim2.png",
+            "easymode-halation.png",
+            "easymode.png",
+            "easymode2.png",
+            "fake-crt-geom-potato.png",
+            "fake-crt-geom-potato2.png",
+            "fake-crt-geom.png",
+            "fake-crt-geom2.png",
+            "fakelottes.png",
+            "fakelottes2.png",
+            "geom.png",
+            "gtuv50.png",
+            "gtuv502.png",
+            "guest-dr-venom-fast.png",
+            "guest-dr-venom-fast2.png",
+            "guest-dr-venom-kurozumi.png",
+            "guest-dr-venom-stock.png",
+            "guest-dr-venom-stock2.png",
+            "guest-dr-venom.png",
+            "guest-sm.png",
+            "guest-sm2.png",
+            "guest.r-mini.png",
+            "guest.r-mini2.png",
+            "hyllian-fast.png",
+            "hyllian-fast2.png",
+            "hyllian-glow.png",
+            "hyllian-glow2.png",
+            "hyllian-multipass.png",
+            "hyllian-multipass2.png",
+            "hyllian-smartblur-sgenpt.png",
+            "hyllian-smartblur-sgenpt2.png",
+            "hyllian.png",
+            "hyllian2.png",
+            "lottes-fast.png",
+            "lottes-fast2.png",
+            "lottes-multipass.png",
+            "lottes-multipass2.png",
+            "lottes.png",
+            "lottes2.png",
+            "mame_hlsl.png",
+            "mame_hlsl2.png",
+            "mattias.png",
+            "mattias2.png",
+            "nobody.png",
+            "phosphorlut.png",
+            "pi.png",
+            "pi2.png",
+            "potato-cool.png",
+            "potato-cool2.png",
+            "potato-warm.png",
+            "potato-warm2.png",
+            "royale-fake-bloom-intel.png",
+            "royale-fake-bloom.png",
+            "royale-kurozumi.png",
+            "royale-xm29plus.png",
+            "royale.png",
+            "smuberstep-glow.png",
+            "smuberstep-glow2.png",
+            "stock.png",
+            "vga.png",
+            "yee64.png",
+            "yee642.png",
+            "zfast-crt.png",
+            "zfast-crt2.png",
+        ];
+        
+        let sel1 = $("#sel1");
+        let sel2 = $("#sel2");
+
+        files.forEach(function(file) {
+            let option = $("<option>", { value: file, text: file });
+            sel1.append(option);
+            let option2 = $("<option>", { value: file, text: file });
+            sel2.append(option2);
+        });
+
+        sel1.change(function(){
+            let selectedValue = $(this).val();
+            $("#before").attr("src", selectedValue)
+                .attr("alt", selectedValue);
+        });
+
+        sel2.change(function(){
+            let selectedValue = $(this).val();
+            $("#after").attr("src", selectedValue);
+        });
+
+        sel1.val("stock.png");
+        sel2.val("guest-dr-venom.png");
+
+        var imagesCompareElement = $('.js-img-compare').imagesCompare();
+        var imagesCompare = imagesCompareElement.data('imagesCompare');
+        var events = imagesCompare.events();
+
+        $('.js-front-btn').on('click', function (event) {
+            event.preventDefault();
+            imagesCompare.setValue(1, true);
+        });
+
+        $('.js-back-btn').on('click', function (event) {
+            event.preventDefault();
+            imagesCompare.setValue(0, true);
+        });
+
+        $('.js-toggle-btn').on('click', function (event) {
+            event.preventDefault();
+            if (imagesCompare.getValue() >= 0 && imagesCompare.getValue() < 1) {
+                imagesCompare.setValue(1, true);
+            } else {
+                imagesCompare.setValue(0, true);
+            }
+        });
+    });
+</script>
+</body>
+</html>
